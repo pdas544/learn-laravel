@@ -6,5 +6,7 @@ use Illuminate\Http\Request;
 
 class ExampleController extends Controller
 {
-    //
+    public function home(){
+        
+    }
 }
