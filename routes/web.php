@@ -3,11 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ExampleController::class,'home']);
 
-Route::get('/home', function () {
-    return view('home');
-});
+Route::get('/about',[ExampleController::class,'about']);
+
+Route::post('/register',[UserController::class,'register']) ;
