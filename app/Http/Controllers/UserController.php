@@ -9,6 +9,14 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
     //
+
+    public function showCorrectHomePage(){
+        if(auth()->check()){
+            return view('homepage-feed');
+        }else{
+            return view('home');
+        }
+    }
     public function register(Request $request){
         $data = $request->validate([
             'username' => ['required','min:3',Rule::unique('users','username')],
@@ -21,6 +29,18 @@ class UserController extends Controller
         User::create($data);
 
         return 'hello from register function';
+    }
+
+    public function login(Request $request){
+        $data = $request->validate([
+            'loginusername'=>'required',
+            'loginpassword'=>'required'
+        ]);
+        if(auth()->attempt(['username'=>$data['loginusername'],'password'=>$data['loginpassword']])){
+            $request->session()->regenerate();
+        }else{
+return 'Failed';
+        }
     }
     
 }
