@@ -8,8 +8,15 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    //
-
+    
+    /**
+     * 
+     * @param Request $request
+    */
+    public function logout(){
+        auth()->logout();
+        return redirect('/')->with('success','You are now logged out');
+    }
     public function showCorrectHomePage(){
         if(auth()->check()){
             return view('homepage-feed');
@@ -26,9 +33,9 @@ class UserController extends Controller
 
         $data['password'] = bcrypt($data['password']);
 
-        User::create($data);
-
-        return 'hello from register function';
+        $user = User::create($data);
+        auth()->login($user);
+        return redirect('/')->with('success','Thank you for registering.');
     }
 
     public function login(Request $request){
@@ -38,8 +45,9 @@ class UserController extends Controller
         ]);
         if(auth()->attempt(['username'=>$data['loginusername'],'password'=>$data['loginpassword']])){
             $request->session()->regenerate();
+            return redirect('/')->with('success','You are now logged in');
         }else{
-return 'Failed';
+return redirect('/')->with('error','Invalid Credentials');
         }
     }
     
