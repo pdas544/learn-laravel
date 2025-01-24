@@ -43,6 +43,8 @@ class UserController extends Controller
             'loginusername'=>'required',
             'loginpassword'=>'required'
         ]);
+        
+
         if(auth()->attempt(['username'=>$data['loginusername'],'password'=>$data['loginpassword']])){
             $request->session()->regenerate();
             return redirect('/')->with('success','You are now logged in');

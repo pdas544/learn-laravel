@@ -21,7 +21,7 @@
           <a href="#" class="text-white mr-2 header-search-icon" title="Search" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-search"></i></a>
           <span class="text-white mr-2 header-chat-icon" title="Chat" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-comment"></i></span>
           <a href="#" class="mr-2"><img title="My Profile" data-toggle="tooltip" data-placement="bottom" style="width: 32px; height: 32px; border-radius: 16px" src="https://gravatar.com/avatar/f64fc44c03a8a7eb1d52502950879659?s=128" /></a>
-          <a class="btn btn-sm btn-success mr-2" href="#">Create Post</a>
+          <a class="btn btn-sm btn-success mr-2" href="/create-post">Create Post</a>
           <form action="/logout" method="POST" class="d-inline">
             @csrf
             <button class="btn btn-sm btn-secondary">Sign Out</button>
@@ -50,7 +50,7 @@
     <!-- header ends here -->
     @if (session()->has('success'))
     <div class="container container--narrow">
-      <div class="alert alert-success">
+      <div class="alert alert-success text-center message">
         {{session('success')}}
       </div>
     </div>
@@ -58,7 +58,7 @@
     @endif
     @if (session()->has('error'))
     <div class="container container--narrow">
-      <div class="alert alert-danger">
+      <div class="alert alert-danger text-center message">
         {{session('error')}}
       </div>
     </div>
@@ -78,9 +78,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
-      // $('[data-toggle="tooltip"]').tooltip()
-      $(".alert-success").fadeOut(5000);
-      $(".alert-danger").fadeOut(5000);
+      
+      $(".message").fadeOut(5000);
+      // $(".alert-danger").fadeOut(5000);
+      $('[data-toggle="tooltip"]').show();
     </script>
   </body>
 </html>
