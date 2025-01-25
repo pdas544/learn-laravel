@@ -17,3 +17,4 @@ Route::post('/logout',[UserController::class,'logout']) ;
 //Post related routes
 Route::post('/create-post',[PostController::class,'createNewPost']) ;
 Route::get('/create-post',[PostController::class,'showForm']) ;
+Route::get('/post/{post}',[PostController::class,'showSinglePost']) ;
