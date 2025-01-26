@@ -10,10 +10,7 @@ class PostController extends Controller
 {
 
     public function showForm(){
-        if(!auth()->check()){
-            return redirect('/');
-        }
-
+    
         return view('create-post');
     }
 

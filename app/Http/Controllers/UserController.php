@@ -9,6 +9,10 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
     
+    public function showProfile(User $user){
+        
+        return view('profile-posts',['username'=>$user->username,'posts'=>$user->posts()->latest()->get(),'postCount'=>$user->posts()->count()]);
+    }
     /**
      * 
      * @param Request $request
