@@ -9,6 +9,33 @@ use Illuminate\Support\Str;
 class PostController extends Controller
 {
 
+    public function showEditForm(Post $post){
+
+        return view('edit-post',['post'=>$post]);
+    }
+
+    public function updatePost(Post $post, Request $request){
+
+        $data = $request->validate([
+            'title'=>'required',
+            'body'=>'required'
+        ]);
+
+        $post['title'] = strip_tags($data['title']);
+        $post['body'] = strip_tags($data['body']);
+
+        $post->update($data);
+
+        return redirect("/post/{$post->id}")->with('success','Post updated successfully');
+    }
+
+    public function deletePost(Post $post){
+
+        $post->delete();
+
+        return redirect('/profile/'.$post->user->username)->with('success','Post deleted successfully');
+    }
+
     public function showForm(){
     
         return view('create-post');
