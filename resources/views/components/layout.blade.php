@@ -22,21 +22,9 @@
         <div class="flex-row my-3 my-md-0">
           <a href="#" class="text-white me-2 header-search-icon" title="Search" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-search"></i></a>
           <span class="text-white me-2 header-chat-icon" title="Chat" data-toggle="tooltip" data-placement="bottom"><i class="fas fa-comment"></i></span>
-          <div class="dropdown">
-            <a href="#" class="me-2" role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"><img class="avatar-small" title="My Profile" src="https://gravatar.com/avatar/f64fc44c03a8a7eb1d52502950879659?s=128" /></a>
-          {{-- <a href="/profile/{{auth()->user()->username}}" class="me-2" role><img title="My Profile" data-toggle="tooltip" data-placement="bottom" style="width: 32px; height: 32px; border-radius: 16px" src="https://gravatar.com/avatar/f64fc44c03a8a7eb1d52502950879659?s=128" /></a> --}}
+         
+           <a href="/profile/{{auth()->user()->username}}" class="me-2" role><img title="My Profile" data-toggle="tooltip" data-placement="bottom" style="width: 32px; height: 32px; border-radius: 16px" src="https://gravatar.com/avatar/f64fc44c03a8a7eb1d52502950879659?s=128" /></a>
           
-          
-            <ul class="dropdown-menu custom-dropdown">
-              <li><a href="#" class="dropdown-item">Change Password</a></li>
-              <li><a href="/profile/{{auth()->user()->username}}" class="dropdown-item">View Posts</a></li>
-              <li><a href="#" class="dropdown-item">Upload Avatar</a></li>
-              <li><a href="#" class="dropdown-item">Sign Out</a></li>
-
-            </ul>
-          </div>
           
           <a class="btn btn-sm btn-success me-2" href="/create-post">Create Post</a>
           <form action="/logout" method="POST" class="d-inline">
