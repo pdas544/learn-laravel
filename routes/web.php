@@ -14,12 +14,12 @@ Route::post('/login',[UserController::class,'login'])->middleware('guest');
 
 Route::post('/logout',[UserController::class,'logout'])->middleware('auth');
 
-Route::get( '/manage-avatar',[UserController::class,'showAvatar']);
-Route::post( '/manage-avatar',[UserController::class,'storeAvatar']);
+Route::get( '/manage-avatar',[UserController::class,'showAvatar'])->middleware('loggedIn');
+Route::post( '/manage-avatar',[UserController::class,'storeAvatar'])->middleware('loggedIn');
 
 //Post related routes
-Route::post('/create-post',[PostController::class,'createNewPost'])->middleware('auth');
-Route::get('/create-post',[PostController::class,'showForm'])->middleware('auth');
+Route::post('/create-post',[PostController::class,'createNewPost'])->middleware('loggedIn');
+Route::get('/create-post',[PostController::class,'showForm'])->middleware('loggedIn');
 Route::get('/post/{post}',[PostController::class,'showSinglePost']) ;
 Route::delete('/post/{post}',[PostController::class,'deletePost'])->middleware('can:delete,post');
 Route::get('/post/{post}/edit',[PostController::class,'showEditForm'])->middleware('can:update,post');
