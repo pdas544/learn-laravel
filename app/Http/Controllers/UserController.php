@@ -14,8 +14,12 @@ class UserController extends Controller
     }
 
     public function storeAvatar(Request $request){
+        $request->validate([
+            'avatar'=>'required|image|max:2048'
+        ]);  // Validate the uploaded file
+        
         $request->file('avatar')->store('avatars','public');
-        return 'uploaded';
+        // return 'uploaded';
     }
     
     public function showProfile(User $user){

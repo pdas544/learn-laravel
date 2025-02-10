@@ -5,7 +5,7 @@
     @csrf
     <div class="form-group">
         <label for="avatar-file" class="text-muted mb-1">Select an image file</label>
-        <input type="file" id="avatar-file" class="form-control" name="avatar" accept="image/*" required>
+        <input type="file" id="avatar-file" class="form-control" name="avatar" accept="image/*">
         @error('avatar')
             <p class="alert small alert-danger shadow-sm">{{$message}}</p>
         @enderror
