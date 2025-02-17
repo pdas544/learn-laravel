@@ -32,6 +32,9 @@ class UserController extends Controller
         $imageData = $image->cover(128, 128)->toJpeg();
         Storage::disk('public')->put('avatars/' . $fileName, $imageData);
 
+        $user->avatar = $fileName;
+        $user->save();
+
         return redirect('/profile/' . auth()->user()->username)->with('success', 'Avatar uploaded successfully');
         // $request->file('avatar')->store('avatars','public');
         // return 'uploaded';
