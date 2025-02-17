@@ -42,3 +42,5 @@
     - Use @foreach...@endforeach
     - Use @csrf for CSRF protection
     - Use @method('DELETE') to specify default form action method
+- Day: 17.02.2025
+    - Add Attribute to the User Model for dynamically updating the user's avatar
