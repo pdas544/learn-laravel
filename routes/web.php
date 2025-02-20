@@ -20,7 +20,7 @@ Route::post( '/manage-avatar',[UserController::class,'storeAvatar'])->middleware
 
 //Follow related routes
 Route::post('/create-follow/{user:username}',[FollowController::class,'createFollow'])->middleware('loggedIn');
-Route::delete('/remove-follow/{user:username}',[FollowController::class,'removeFollow'])->middleware('loggedIn');
+Route::post('/remove-follow/{user:username}',[FollowController::class,'removeFollow'])->middleware('loggedIn');
 
 //Post related routes
 Route::post('/create-post',[PostController::class,'createNewPost'])->middleware('loggedIn');

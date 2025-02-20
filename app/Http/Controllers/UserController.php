@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Follow;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class UserController extends Controller
 {
@@ -46,9 +47,14 @@ class UserController extends Controller
        
     }
 
-    public function showProfile(User $user)
-    {
-        return view('profile-posts', ['avatar'=> $user->avatar,'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+    public function showProfile(User $user){
+        $currentlyFollowing=0;
+
+        if(auth()->check()){
+            $currentlyFollowing = Follow::where([['user_id','=',auth()->user()->id],['followed_user','=',$user->id]])->count();
+        }
+
+        return view('profile-posts', ['currentlyFollowing'=>$currentlyFollowing,'avatar'=> $user->avatar,'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
     }
     /**
      *
