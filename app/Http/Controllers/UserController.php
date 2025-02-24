@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Follow;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\View;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Drivers\Gd\Driver;
@@ -47,7 +48,29 @@ class UserController extends Controller
        
     }
 
+    private function getShareData($user) {
+        $currentlyFollowing=0;
+
+        if(auth()->check()){
+            $currentlyFollowing = Follow::where([['user_id','=',auth()->user()->id],['followed_user','=',$user->id]])->count();
+        }
+
+        View::Share('shareData', ['currentlyFollowing'=>$currentlyFollowing,'avatar'=> $user->avatar,'username' => $user->username, 'postCount' => $user->posts()->count()]);
+    }
+
     public function showProfile(User $user){
+    
+        return view('profile-posts', ['posts' => $user->posts()->latest()->get()]);
+    }
+
+
+    public function profileFollowers(User $user){
+        
+
+        return view('profile-posts', ['currentlyFollowing'=>$currentlyFollowing,'avatar'=> $user->avatar,'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+    }
+
+    public function profileFollowing(User $user){
         $currentlyFollowing=0;
 
         if(auth()->check()){
