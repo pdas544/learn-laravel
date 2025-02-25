@@ -48,36 +48,33 @@ class UserController extends Controller
        
     }
 
-    private function getShareData($user) {
+    private function getSharedData($user) {
         $currentlyFollowing=0;
 
         if(auth()->check()){
             $currentlyFollowing = Follow::where([['user_id','=',auth()->user()->id],['followed_user','=',$user->id]])->count();
         }
 
-        View::Share('shareData', ['currentlyFollowing'=>$currentlyFollowing,'avatar'=> $user->avatar,'username' => $user->username, 'postCount' => $user->posts()->count()]);
+        View::Share('sharedData', ['currentlyFollowing'=>$currentlyFollowing,'avatar'=> $user->avatar,'username' => $user->username, 'postCount' => $user->posts()->count(), 'followerCount' => $user->followers()->count(),'followingCount' => $user->followingTheseUsers()->count()]);
     }
-
+    
     public function showProfile(User $user){
     
+        $this->getSharedData($user);
         return view('profile-posts', ['posts' => $user->posts()->latest()->get()]);
     }
 
 
     public function profileFollowers(User $user){
         
-
-        return view('profile-posts', ['currentlyFollowing'=>$currentlyFollowing,'avatar'=> $user->avatar,'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+        $this->getSharedData($user);
+        // return $user->followers()->latest()->get();
+        return view('profile-followers', ['followers'=>$user->followers()->latest()->get()]);
     }
 
     public function profileFollowing(User $user){
-        $currentlyFollowing=0;
-
-        if(auth()->check()){
-            $currentlyFollowing = Follow::where([['user_id','=',auth()->user()->id],['followed_user','=',$user->id]])->count();
-        }
-
-        return view('profile-posts', ['currentlyFollowing'=>$currentlyFollowing,'avatar'=> $user->avatar,'username' => $user->username, 'posts' => $user->posts()->latest()->get(), 'postCount' => $user->posts()->count()]);
+        $this->getSharedData($user);
+        return view('profile-following', ['following' => $user->followingTheseUsers()->latest()->get()]);
     }
     /**
      *
