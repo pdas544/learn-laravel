@@ -9,6 +9,11 @@ use Illuminate\Support\Str;
 class PostController extends Controller
 {
 
+    public function searchPost($term){
+        $posts = Post::search($term)->get();
+        $posts->load('user:id,username,avatar');
+        return $posts;
+    }
     public function showEditForm(Post $post){
 
         return view('edit-post',['post'=>$post]);
