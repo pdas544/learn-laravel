@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\ChatMessage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -35,3 +37,19 @@ Route::get('/search/{term}',[PostController::class,'searchPost']);
 Route::get('/profile/{user:username}',[UserController::class,'showProfile']);
 Route::get('/profile/{user:username}/followers',[UserController::class,'profileFollowers']);
 Route::get('/profile/{user:username}/following',[UserController::class,'profileFollowing']);
+
+//chat route
+Route::post('/send-chat-message',function(Request $request){
+    $formFields = $request->validate([
+        'textvalue'=> 'required'
+
+    ]);
+
+    if(!trim(strip_tags($formFields['textvalue']))){
+        return response()->noContent(); 
+    }
+
+    broadcast(new ChatMessage(['username'=>auth()->user()->username,'textvalue'=>strip_tags($request->textvalue),'avatar'=>auth()->user()->avatar]))->toOthers();
+
+    return response()->noContent();
+})->middleware('loggedIn');
