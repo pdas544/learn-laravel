@@ -37,8 +37,8 @@
             <h4 class="my-0 me-md-auto font-weight-normal"><a href="/" class="text-white">Blog App</a></h4>
             @auth()
                 <div class="flex-row my-3 my-md-0">
-                    <a href="#" class="text-white me-2 header-search-icon" title="Search" data-toggle="tooltip"
-                        data-placement="bottom"><i class="fas fa-search"></i></a>
+                    <livewire:search />
+
                     <span class="text-white me-2 header-chat-icon" title="Chat" data-toggle="tooltip"
                         data-placement="bottom"><i class="fas fa-comment"></i></span>
 
