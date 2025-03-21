@@ -40,7 +40,6 @@
                     <livewire:search />
                     <livewire:chat />
 
-
                     <a href="/profile/{{ auth()->user()->username }}" class="me-2" role><img title="My Profile"
                             data-toggle="tooltip" data-placement="bottom"
                             style="width: 32px; height: 32px; border-radius: 16px" src="{{ auth()->user()->avatar }}" /></a>
