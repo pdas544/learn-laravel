@@ -17,9 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js"
-        integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous">
-    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
@@ -34,18 +32,21 @@
 <body>
     <header class="header-bar mb-3">
         <div class="container d-flex flex-column flex-md-row align-items-center p-3">
-            <h4 class="my-0 me-md-auto font-weight-normal"><a href="/" class="text-white">Blog App</a></h4>
+            <h4 class="my-0 me-md-auto font-weight-normal"><a wire:navigate href="/" class="text-white">Blog
+                    App</a></h4>
             @auth()
                 <div class="flex-row my-3 my-md-0">
-                    <livewire:search />
-                    <livewire:chat />
+                    @persist('headerdynamic')
+                        <livewire:search />
+                        <livewire:chat />
+                    @endpersist
 
-                    <a href="/profile/{{ auth()->user()->username }}" class="me-2" role><img title="My Profile"
-                            data-toggle="tooltip" data-placement="bottom"
+                    <a wire:navigate href="/profile/{{ auth()->user()->username }}" class="me-2" role><img
+                            title="My Profile" data-toggle="tooltip" data-placement="bottom"
                             style="width: 32px; height: 32px; border-radius: 16px" src="{{ auth()->user()->avatar }}" /></a>
 
 
-                    <a class="btn btn-sm btn-success me-2" href="/create-post">Create Post</a>
+                    <a wire:navigate class="btn btn-sm btn-success me-2" href="/create-post">Create Post</a>
                     <form action="/logout" method="POST" class="d-inline">
                         @csrf
                         <button class="btn btn-sm btn-secondary">Sign Out</button>
