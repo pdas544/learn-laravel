@@ -52,7 +52,7 @@ class PostController extends Controller
             'title'=>'required',
             'body'=>'required'
         ]);
-
+        
         //sanitize user input
 
         $data['title'] = strip_tags($data['title']);

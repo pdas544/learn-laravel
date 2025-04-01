@@ -4,19 +4,11 @@
             <img class="avatar-small" src="{{ $sharedData['avatar'] }}" /> {{ $sharedData['username'] }}
             @auth
                 @if (!$sharedData['currentlyFollowing'] and auth()->user()->username != $sharedData['username'])
-                    <form class="ml-2 d-inline" action="/create-follow/{{ $sharedData['username'] }}" method="POST">
-                        @csrf
-                        <button class="btn btn-primary btn-sm">Follow <i class="fas fa-user-plus"></i></button>
-
-                    </form>
+                    <livewire:addfollow :username="$sharedData['username']" />
                 @endif
 
                 @if ($sharedData['currentlyFollowing'])
-                    <form class="ml-2 d-inline" action="/remove-follow/{{ $sharedData['username'] }}" method="POST">
-                        @csrf
-                        <button class="btn btn-danger btn-sm">Stop Following <i class="fas fa-user-times"></i></button>
-
-                    </form>
+                    <livewire:removefollow :username="$sharedData['username']" />
                 @endif
                 @if (auth()->user()->username == $sharedData['username'])
                     <a href="/manage-avatar" class="btn btn-secondary btn-sm">Manage Avatar</a>
