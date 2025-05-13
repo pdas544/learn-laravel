@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendNewPostEmail;
 use App\Models\Post;
-use App\Mail\NewPostEmail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -64,13 +64,10 @@ class PostController extends Controller
         //store post data into the database
         $post = Post::create($data);
 
-        //send email to the user
-        Mail::to(auth()->user()->email)->send(new NewPostEmail([
-            'name'=>auth()->user()->username,
-            'title'=>$post->title,
-            
-        ]
-        ));
+
+        //dispatch a job to send email to the user
+        dispatch(new SendNewPostEmail(['sendTo' => auth()->user()->email, 'name' => auth()->user()->username, 'title' => $post->title]));
+        
 
         //redirect the user to show the newly created post
         return redirect("/post/{$post->id}")->with('success','New post created successfully');
