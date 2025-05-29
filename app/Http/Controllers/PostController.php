@@ -48,6 +48,34 @@ class PostController extends Controller
         return view('create-post');
     }
 
+    public function createPostApi(Request $request){
+        
+        $data = $request->validate([
+            'title'=>'required',
+            'body'=>'required'
+        ]);
+        
+        //sanitize user input
+
+        $data['title'] = strip_tags($data['title']);
+        $data['body'] = strip_tags($data['body']);
+        $data['user_id'] = auth()->id();
+
+        //store post data into the database
+        $post = Post::create($data);
+
+
+        //dispatch a job to send email to the user
+        dispatch(new SendNewPostEmail(['sendTo' => auth()->user()->email, 'name' => auth()->user()->username, 'title' => $post->title]));
+        
+
+        //redirect the user to show the newly created post
+        return response()->json([
+            'message' => 'New post created successfully',
+            'post' => $post
+        ], 201);
+    } 
+
     public function createNewPost(Request $request){
         
         $data = $request->validate([

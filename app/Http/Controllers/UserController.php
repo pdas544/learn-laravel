@@ -16,6 +16,25 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class UserController extends Controller
 {
+    /**
+     * loginApi
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|string
+     */
+    public function loginApi(Request $request){
+        $incomingData = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+        if (auth()->attempt($incomingData)) {
+           $user = User::where('username', $incomingData['username'])->first();
+           $token = $user->createToken('API Token')->plainTextToken;
+            return $token;
+        }
+        return response()->json(['message' => 'Invalid credentials'], 401);
+    }
+
     public function showAvatar()
     {
         return view('avatar-form');
