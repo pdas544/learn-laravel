@@ -13,3 +13,6 @@ Route::post('/login',[UserController::class,'loginApi']);
 
 //create a new post
 Route::post('/create-post',[PostController::class,'createPostApi'])->middleware('auth:sanctum');
+
+//delete a post
+Route::delete('/delete-post/{post}',[PostController::class,'deletePostApi'])->middleware('auth:sanctum', 'can:delete,post');

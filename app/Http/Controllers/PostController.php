@@ -42,6 +42,14 @@ class PostController extends Controller
 
         return redirect('/profile/'.$post->user->username)->with('success','Post deleted successfully');
     }
+    public function deletePostApi(Post $post){
+
+        $post->delete();    
+
+        return response()->json([
+            'message' => 'Post deleted successfully'
+        ], 200);
+    }
 
     public function showForm(){
     
